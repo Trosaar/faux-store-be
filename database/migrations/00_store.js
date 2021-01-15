@@ -35,7 +35,7 @@ exports.up = function(knex) {
             .references('id').inTable('subCategories')
 
     })
-    .createTable('receipt', tbl => {
+    .createTable('receipts', tbl => {
         tbl.increments()
         tbl.integer('user_id').unsigned().notNullable()
             .references('UUID').inTable('users')
@@ -57,7 +57,8 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
     return knex.schema
-    .dropTableIfExists('purchases')
+    .dropTableIfExists('purchased_items')
+    .dropTableIfExists('receipts')
     .dropTableIfExists('items')
     .dropTableIfExists('users')
     .dropTableIfExists('subCategories')
@@ -65,20 +66,3 @@ exports.down = function(knex) {
     .dropTableIfExists('item_colors')
     .dropTableIfExists('item_sizes')
 }
-
-/*
-Users
-    ID
-    Username
-    Password
-
-Items
-    ID
-    price
-    description
-    stock
-
-puchases
-    userID
-    itemID
-*/
