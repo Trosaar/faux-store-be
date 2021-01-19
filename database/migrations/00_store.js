@@ -47,8 +47,8 @@ exports.up = function(knex) {
     .createTable('purchased_items', tbl => {
         tbl.integer('receipt_id').unsigned().notNullable()
         tbl.integer('item_id').notNullable().unsigned()
+            .references('id').inTable('items')
         tbl.integer('quantity').notNullable().unsigned()
-            .references('id').inTable('purchases')
         tbl.primary(['receipt_id', 'item_id']);
     })
 }
