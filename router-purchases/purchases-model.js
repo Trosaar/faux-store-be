@@ -20,7 +20,7 @@ function getAll() {
 function getByUser(id) {
     return db('receipts as r')
     .join('users', 'users.UUID', 'r.user_id')
-    .join('purchased_purchased_items as p', 'p.receipt_id', 'r.id')
+    .join('purchased_items as p', 'p.receipt_id', 'r.id')
     .join('items as i', 'i.id', 'r.item_id')
     .where({ 'r.user_id': id })
 }

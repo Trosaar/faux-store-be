@@ -9,7 +9,9 @@ describe('purchases routes', () => {
         password: "purchasespass"    }
 
     beforeAll( async() => {
-        await db('purchases').truncate()
+        await db('receipts').truncate()
+
+        await db('purchased_items').truncate()
 
         await db('users').truncate()
 
@@ -30,8 +32,6 @@ describe('purchases routes', () => {
 
             await request(server).post('/api/purchases').set('authorization', authInfo.token)
             .send(newPurchase).then(res => {
-                console.log(res.body)
-                console.log(res.error)
                 expect(res.status).toBe(200)
             })
         })
