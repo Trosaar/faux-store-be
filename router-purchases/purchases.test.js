@@ -1,6 +1,7 @@
 const server = require('../api/server.js')
 const request = require('supertest')
 const db = require('../database/dbConfig.js')
+const { getBy } = require('../router-auth/auth-model.js')
 
 describe('purchases routes', () => {
     authInfo = {
@@ -8,8 +9,11 @@ describe('purchases routes', () => {
         password: "purchasespass"    }
 
     beforeAll( async() => {
-        await db('purchases').truncate()
+        await db('receipts').truncate()
+
         await db('purchased_items').truncate()
+
+        await db('users').truncate()
 
         await request(server).post('/api/auth/register')
         .send(authInfo).then(res => {
@@ -28,8 +32,6 @@ describe('purchases routes', () => {
 
             await request(server).post('/api/purchases').set('authorization', authInfo.token)
             .send(newPurchase).then(res => {
-                console.log(res.body)
-                console.log(res.error)
                 expect(res.status).toBe(200)
             })
         })
